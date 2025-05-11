@@ -1,0 +1,41 @@
+#--------------2.1. Creación de la Tabla------------ 
+#(Los siguientes comandos se ejecutan en el hbase shell después de conectarse)
+#Creación de la Tabla
+# Deshabilitar y eliminar la tabla si ya existe para pruebas limpias (¡CUIDADO EN PRODUCCIÓN!)
+disable 'products_hbase'
+drop 'products_hbase'
+
+# Crear la tabla con las familias de columnas
+create 'products_hbase', 'info', 'details', 'media', 'reviews'
+
+# Describir la tabla para verificar su estructura
+describe 'products_hbase'
+
+
+# Generar un Row Key de ejemplo
+# (En un script real, esto sería dinámico)
+# Supongamos que currentTimeMillis es 1700000000000
+# Long.MAX_VALUE es 9223372036854775807
+# TimestampInverso = 9223372036854775807 - 1700000000000 = 7523372036854775807
+# RowKey: Electronica_7523372036854775807_prodA01
+
+#--------------Carga de Datos (Inserción - put)------------
+
+
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'info:name', 'Laptop Ultrabook Avanzada'
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'info:description', 'Laptop ligera y potente para profesionales.'
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'info:price', '1299.99' // Almacenar como string
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'info:stock', '30'    // Almacenar como string
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'info:brand', 'DellXPS'
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'info:category_name', 'Electrónica'
+
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'details:processor', 'Intel Core i7 13th Gen'
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'details:ram', '16GB DDR5'
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'details:storage', '1TB NVMe SSD'
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'details:screen_resolution', 'QHD+ (2560x1600)'
+
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'media:main_image_url', 'http://example.com/laptop_main.jpg'
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'media:thumbnail_url', 'http://example.com/laptop_thumb.jpg'
+
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'reviews:review_20240310100000_user123', '{"rating": 5, "comment": "Increíble rendimiento y portabilidad.", "user_display_name": "TechGuru"}'
+put 'products_hbase', 'Electronica_7523372036854775807_prodA01', 'reviews:review_20240312153000_user456', '{"rating": 4, "comment": "Muy buena, aunque la batería podría durar un poco más.", "user_display_name": "RoadWarrior"}'
